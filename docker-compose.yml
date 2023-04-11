@@ -1,0 +1,32 @@
+version: "3.7"
+
+services:
+  gateway:
+    container_name: ceus-gateway
+    image: 100538092962.dkr.ecr.us-east-1.amazonaws.com/ceus/api-gateway:live
+    restart: always
+    ports:
+      - 80:8080
+    environment:
+      ENVIRONMENT: KUBERNETES
+  users:
+    container_name: ceus-users
+    image: 100538092962.dkr.ecr.us-east-1.amazonaws.com/ceus/ms-user:live
+    restart: always
+    ports:
+      - 8000
+    env_file: users.env
+  transaction:
+    container_name: ceus-transactions
+    image: 100538092962.dkr.ecr.us-east-1.amazonaws.com/ceus/ms-transaction:live
+    restart: always
+    ports:
+      - 8000
+    env_file: transactions.env
+  data:
+    container_name: ceus-data
+    image: 100538092962.dkr.ecr.us-east-1.amazonaws.com/ceus/ms-data:live
+    restart: always
+    ports:
+      - 8000
+    env_file: data.env
