@@ -8,7 +8,10 @@ services:
     ports:
       - 80:8080
     environment:
-      ENVIRONMENT: KUBERNETES
+      MICROSERVICE_USER_API_URL: http://ceus-users:8000
+      MICROSERVICE_TRANSACTION_API_URL: http://ceus-transactions:8000
+      MICROSERVICE_DATA_API_URL: http://ceus-data:8000
+      AWS_REGION_NAME: us-east-1
   users:
     container_name: ceus-users
     image: 100538092962.dkr.ecr.us-east-1.amazonaws.com/ceus/ms-user:live
