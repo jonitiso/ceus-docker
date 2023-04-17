@@ -26,6 +26,26 @@ services:
     ports:
       - 8000
     env_file: transactions.env
+  transaction_celery:
+    container_name: ceus-transactions-celery
+    image: 100538092962.dkr.ecr.us-east-1.amazonaws.com/ceus/ms-transaction:live
+    command: celery -A apps.utils worker -l info
+    depends_on:
+      - transaction
+    restart: always
+    ports:
+      - 8000
+    env_file: transactions.env
+  transaction_celery_beat:
+    container_name: ceus-transactions-celery-beat
+    image: 100538092962.dkr.ecr.us-east-1.amazonaws.com/ceus/ms-transaction:live
+    command: celery -A apps.utils beat -l info
+    depends_on:
+      - transaction
+    restart: always
+    ports:
+      - 8000
+    env_file: transactions.env
   data:
     container_name: ceus-data
     image: 100538092962.dkr.ecr.us-east-1.amazonaws.com/ceus/ms-data:live
