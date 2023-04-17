@@ -54,7 +54,7 @@ services:
     image: 100538092962.dkr.ecr.us-east-1.amazonaws.com/ceus/ms-data:live
     command: celery -A apps.utils worker -l info
     depends_on:
-      - transaction
+      - data
     restart: always
     env_file: data.env
   data_celery_beat:
@@ -62,7 +62,7 @@ services:
     image: 100538092962.dkr.ecr.us-east-1.amazonaws.com/ceus/ms-data:live
     command: celery -A apps.utils beat -l info
     depends_on:
-      - transaction
+      - data
     restart: always
     env_file: data.env
   redis:
