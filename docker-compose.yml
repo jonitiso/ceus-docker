@@ -15,11 +15,15 @@ services:
   users:
     container_name: ceus-users
     image: 100538092962.dkr.ecr.us-east-1.amazonaws.com/ceus/ms-user:live
+    depends_on:
+      - redis
     restart: always
     env_file: users.env
   transaction:
     container_name: ceus-transactions
     image: 100538092962.dkr.ecr.us-east-1.amazonaws.com/ceus/ms-transaction:live
+    depends_on:
+      - redis
     restart: always
     env_file: transactions.env
   transaction_celery:
@@ -41,6 +45,8 @@ services:
   data:
     container_name: ceus-data
     image: 100538092962.dkr.ecr.us-east-1.amazonaws.com/ceus/ms-data:live
+    depends_on:
+      - redis
     restart: always
     env_file: data.env
   data_celery:
@@ -59,3 +65,10 @@ services:
       - transaction
     restart: always
     env_file: data.env
+  redis:
+    container_name: ceus-redis
+    image: redis:alpine
+    command: redis-server --save 20 1
+    restart: always
+    volumes:
+      - /docker-data/redis-cache:/data
