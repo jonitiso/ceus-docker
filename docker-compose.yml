@@ -67,6 +67,8 @@ services:
     env_file: data.env
   redis:
     container_name: ceus-redis
+    ports:
+      - 6379
     image: redis:alpine
     command: redis-server --save 20 1
     restart: always
